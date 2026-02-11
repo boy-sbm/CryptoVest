@@ -1,0 +1,4 @@
+[
+  {"id":100,"userId":1,"subject":"Missing deposit","message":"I deposited funds but they are not showing.","status":"open"},
+  {"id":101,"userId":2,"subject":"Login issue","message":"Cannot login with Google OAuth.","status":"resolved"}
+]

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoVest - Invest in Cryptocurrency with Confidence</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .hero {
+      text-align: center;
+      padding: 120px 20px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3.5em;
+      margin: 0 0 20px 0;
+      color: #FFD700;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      margin: 0 0 40px 0;
+      color: #AAA;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background-color: #FFD700;
+      color: #000;
+      padding: 15px 40px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: all 0.3s;
+      border: 2px solid #FFD700;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    .btn:hover {
+      background-color: #e6c200;
+      border-color: #e6c200;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+    }
+
+    .btn-secondary:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature {
+      background: #111;
+      padding: 40px 30px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #333;
+      transition: all 0.3s;
+    }
+
+    .feature:hover {
+      border-color: #FFD700;
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .feature h2 {
+      color: #FFD700;
+      margin: 20px 0 15px 0;
+      font-size: 1.5em;
+    }
+
+    .feature p {
+      color: #AAA;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .stats-section h2 {
+      color: #FFD700;
+      font-size: 2.5em;
+      margin: 0 0 60px 0;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .stat {
+      color: #FFD700;
+    }
+
+    .stat-number {
+      font-size: 3em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: #AAA;
+      font-size: 1.1em;
+    }
+
+    /* How it Works */
+    .how-it-works {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      color: #FFD700;
+      font-size: 2.5em;
+      margin: 0 0 60px 0;
+    }
+
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .step {
+      background: #111;
+      padding: 40px 30px;
+      border-radius: 10px;
+      border-left: 4px solid #FFD700;
+      position: relative;
+      text-align: center;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -15px;
+      left: 30px;
+      width: 50px;
+      height: 50px;
+      background: #FFD700;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+    .step h3 {
+      color: #FFD700;
+      margin: 30px 0 15px 0;
+    }
+
+    .step p {
+      color: #AAA;
+      line-height: 1.6;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+      background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+      padding: 80px 20px;
+    }
+
+    .testimonials h2 {
+      text-align: center;
+      color: #FFD700;
+      font-size: 2.5em;
+      margin: 0 0 60px 0;
+    }
+
+    .testimonials-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonial {
+      background: #111;
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .stars {
+      color: #FFD700;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .testimonial-text {
+      color: #AAA;
+      font-size: 0.95em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFD700, #e6c200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+    .author-info h4 {
+      margin: 0;
+      color: #FFD700;
+    }
+
+    .author-info p {
+      margin: 5px 0 0 0;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #FFD700 0%, #e6c200 100%);
+      color: #000;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5em;
+      margin: 0 0 20px 0;
+    }
+
+    .cta-section p {
+      font-size: 1.2em;
+      margin: 0 0 40px 0;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background-color: #000;
+      color: #FFD700;
+      padding: 15px 50px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: all 0.3s;
+      display: inline-block;
+      border: 2px solid #000;
+    }
+
+    .cta-button:hover {
+      background-color: transparent;
+      color: #000;
+    }
+
+    /* Footer Enhancements */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #111;
+      border-top: 1px solid #333;
+      color: #AAA;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2em;
+      }
+
+      .hero p {
+        font-size: 1.1em;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .stats-number {
+        font-size: 2em;
+      }
+
+      .cta-section h2 {
+        font-size: 1.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark"><img src="../assets/images/logo.png" alt="" /></div>
+  <div class="watermark"><img src="../assets/images/logo.png" alt="" /></div>
+  <header>
+    <div class="logo"><img src="../assets/images/logo.png" alt="CryptoVest Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;">CryptoVest</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Sign In</a>
+      <a href="register.html">Register</a>
+      <a href="customer-service.html" class="support-link">💬 Support</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Invest in Cryptocurrency with Confidence</h1>
+      <p>Start your journey to financial freedom with secure, transparent, and profitable crypto investments</p>
+      <div class="hero-buttons">
+        <a href="register.html" class="btn">Get Started Now</a>
+        <a href="customer-service.html" class="btn btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <h2>Bank-Level Security</h2>
+      <p>Your assets are protected with military-grade encryption and multi-factor authentication. Sleep soundly knowing your funds are secure.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h2>Lightning Fast</h2>
+      <p>Deposit and withdraw in minutes, not hours. Our optimized system ensures you never miss an opportunity to trade.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h2>Expert Support 24/7</h2>
+      <p>Our dedicated team is always available to help. Real people, real solutions, no bots or automated responses.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📈</div>
+      <h2>Transparent Returns</h2>
+      <p>Watch your portfolio grow in real-time. Every transaction is logged, every return is verifiable.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💎</div>
+      <h2>Premium Assets</h2>
+      <p>Trade Bitcoin, Ethereum, and other top cryptocurrencies with competitive rates and zero hidden fees.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🚀</div>
+      <h2>Scale Your Investment</h2>
+      <p>Start with $50 and scale up as you grow. Flexible investment plans for every budget and goal.</p>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <h2>Trusted by Investors Worldwide</h2>
+    <div class="stats-container">
+      <div class="stat">
+        <div class="stat-number">50K+</div>
+        <div class="stat-label">Active Users</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">$2.5B+</div>
+        <div class="stat-label">Assets Under Management</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">150+</div>
+        <div class="stat-label">Countries Supported</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Customer Satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Create Account</h3>
+        <p>Sign up in minutes with just your email. Complete KYC verification for full access to all features and higher limits.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Fund Your Wallet</h3>
+        <p>Deposit funds using multiple payment methods. Credit cards, bank transfers, and cryptocurrency deposits all supported.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Start Investing</h3>
+        <p>Choose your investment strategy and start earning. Monitor your portfolio with real-time charts and analytics.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Earn Returns</h3>
+        <p>Watch your investment grow. Withdraw anytime with no lock-in periods or hidden restrictions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonials-container">
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"CryptoVest made crypto investing simple and secure. I've grown my portfolio by 45% in just 6 months!"</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">J</div>
+          <div class="author-info">
+            <h4>James Wilson</h4>
+            <p>Verified Investor</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"The support team is incredible. They answered all my questions and helped me optimize my investment strategy."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div class="author-info">
+            <h4>Sarah Chen</h4>
+            <p>Verified Investor</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Best crypto platform I've used. Transparent, fast, and trustworthy. Highly recommended!"</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div class="author-info">
+            <h4>Michael Rodriguez</h4>
+            <p>Verified Investor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta-section">
+    <h2>Ready to Start Your Crypto Journey?</h2>
+    <p>Join thousands of successful investors and start building wealth today</p>
+    <a href="register.html" class="cta-button">Create Your Free Account</a>
+  </section>
+
+  <footer>
+    <div style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px;">
+        <div>
+          <h3 style="color: #FFD700; margin-bottom: 15px;">CryptoVest</h3>
+          <p style="color: #999; margin: 0;">Secure, transparent, and profitable cryptocurrency investing platform.</p>
+        </div>
+        <div>
+          <h3 style="color: #FFD700; margin-bottom: 15px;">Quick Links</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li><a href="index.html" style="color: #999; text-decoration: none;">Home</a></li>
+            <li><a href="login.html" style="color: #999; text-decoration: none;">Sign In</a></li>
+            <li><a href="register.html" style="color: #999; text-decoration: none;">Register</a></li>
+            <li><a href="customer-service.html" style="color: #999; text-decoration: none;">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: #FFD700; margin-bottom: 15px;">Legal</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li><a href="privacy-policy.html" style="color: #999; text-decoration: none;">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" style="color: #999; text-decoration: none;">Terms of Service</a></li>
+            <li><a href="customer-service.html" style="color: #999; text-decoration: none;">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: #FFD700; margin-bottom: 15px;">Follow Us</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li><a href="#" style="color: #999; text-decoration: none;">🐦 Twitter</a></li>
+            <li><a href="#" style="color: #999; text-decoration: none;">📘 Facebook</a></li>
+            <li><a href="#" style="color: #999; text-decoration: none;">💼 LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr style="border: 1px solid #333; margin: 30px 0;">
+      <p style="text-align: center; color: #999; margin: 0;">&copy; 2026 CryptoVest. All rights reserved. | Secure • Transparent • Profitable</p>
+    </div>
+  </footer>
+</body>
+</html>
+

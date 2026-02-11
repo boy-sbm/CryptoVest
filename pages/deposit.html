@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit Cryptocurrency - CryptoVest</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode.js/1.5.3/qrcode.min.js"></script>
+  <style>
+    .deposit-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 40px;
+      background: #111;
+      border: 2px solid #FFD700;
+      border-radius: 10px;
+      box-shadow: 0 8px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .deposit-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .deposit-header h1 {
+      color: #FFD700;
+      font-size: 2.5em;
+      margin: 0 0 10px 0;
+    }
+
+    .deposit-header p {
+      color: #aaa;
+      font-size: 1.1em;
+    }
+
+    .deposit-section {
+      margin-bottom: 40px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #FFD700;
+    }
+
+    .deposit-section h2 {
+      color: #FFD700;
+      margin: 0 0 20px 0;
+      font-size: 1.3em;
+    }
+
+    .qr-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    #qrCode {
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .wallet-address {
+      background: rgba(255, 215, 0, 0.05);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      word-break: break-all;
+      font-family: 'Courier New', monospace;
+      color: #FFD700;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    .copy-btn {
+      background: #FFD700;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: all 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #e6c200;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .copy-btn.copied {
+      background: #0a7a33;
+      color: white;
+    }
+
+    .deposit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      color: #FFD700;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 12px;
+      border: 2px solid rgba(255, 215, 0, 0.2);
+      background: rgba(0, 0, 0, 0.3);
+      color: #FFD700;
+      border-radius: 5px;
+      font-size: 1em;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #FFD700;
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+      outline: none;
+    }
+
+    .form-group input::placeholder {
+      color: #666;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #FFD700 0%, #ffd700d9 100%);
+      color: #000;
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #e6c200 0%, #FFD700 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .instructions {
+      background: rgba(255, 215, 0, 0.05);
+      border-left: 4px solid #FFD700;
+      padding: 20px;
+      border-radius: 5px;
+      color: #ccc;
+      line-height: 1.8;
+    }
+
+    .instructions h3 {
+      color: #FFD700;
+      margin: 0 0 15px 0;
+    }
+
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+    }
+
+    .deposit-status {
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .deposit-status.success {
+      background: rgba(10, 122, 51, 0.2);
+      border: 2px solid #0a7a33;
+      color: #0a7a33;
+      display: block;
+    }
+
+    .deposit-status.error {
+      background: rgba(220, 53, 69, 0.2);
+      border: 2px solid #dc3545;
+      color: #dc3545;
+      display: block;
+    }
+
+    .deposit-amount-display {
+      color: #FFD700;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .currency-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .currency-btn {
+      padding: 15px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      color: #FFD700;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .currency-btn:hover,
+    .currency-btn.active {
+      background: rgba(255, 215, 0, 0.2);
+      border-color: #FFD700;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+
+    .back-link {
+      color: #FFD700;
+      text-decoration: none;
+      margin-bottom: 20px;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+
+    .back-link:hover {
+      color: #e6c200;
+      transform: translateX(-5px);
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark"><img src="../assets/images/logo.png" alt="" /></div>
+  
+  <header>
+    <div class="logo"><img src="../assets/images/logo.png" alt="CryptoVest Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;">CryptoVest</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="account.html">Dashboard</a>
+      <a href="account.html" class="support-link">← Back to Dashboard</a>
+    </nav>
+  </header>
+
+  <div class="deposit-container">
+    <div class="deposit-header">
+      <h1>💰 Deposit Cryptocurrency</h1>
+      <p>Send Bitcoin to your CryptoVest wallet</p>
+    </div>
+
+    <!-- Wallet Address Section -->
+    <div class="deposit-section">
+      <h2>📍 Your Bitcoin Wallet Address</h2>
+      <p style="color: #aaa; margin-bottom: 20px;">Send Bitcoin funds to this address. Your deposit will be credited immediately upon blockchain confirmation.</p>
+      
+      <div class="qr-container">
+        <div id="qrCode"></div>
+        <p style="color: #aaa; margin-top: 15px; font-size: 0.9em;">Scan with your wallet app</p>
+      </div>
+
+      <div class="wallet-address" id="walletDisplay">
+        bc1qp5ep8pkrrymmgc6nsxj0wte2cjgsj83usx03qf
+      </div>
+      
+      <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Address</button>
+    </div>
+
+    <!-- Deposit Amount Calculator -->
+    <div class="deposit-section">
+      <h2>💵 Calculate Your Deposit</h2>
+      <p style="color: #aaa; margin-bottom: 20px;">Enter the amount you wish to deposit:</p>
+
+      <form id="depositForm" class="deposit-form">
+        <div class="form-group">
+          <label for="depositAmount">Amount (BTC)</label>
+          <input 
+            type="number" 
+            id="depositAmount" 
+            name="depositAmount" 
+            placeholder="0.00" 
+            step="0.00001" 
+            min="0"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="depositUSD">Approximate USD Value</label>
+          <input 
+            type="text" 
+            id="depositUSD" 
+            placeholder="$0.00" 
+            readonly
+            style="background: rgba(0, 0, 0, 0.5); color: #FFD700; cursor: default;"
+          >
+          <small style="color: #888; margin-top: 5px;">* Prices update every 60 seconds (BTC ≈ $42,500 USD)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="depositEmail">Email Address (for confirmation)</label>
+          <input 
+            type="email" 
+            id="depositEmail" 
+            name="depositEmail" 
+            placeholder="your@email.com"
+            required
+          >
+        </div>
+
+        <button type="submit" class="submit-btn" onclick="submitDeposit(event)">
+          💳 Deposit Now
+        </button>
+      </form>
+
+      <div id="depositStatus" class="deposit-status"></div>
+    </div>
+
+    <!-- Instructions Section -->
+    <div class="deposit-section">
+      <div class="instructions">
+        <h3>📖 How to Deposit Bitcoin</h3>
+        <ol>
+          <li><strong>Copy the wallet address</strong> above or scan the QR code with your Bitcoin wallet app</li>
+          <li><strong>Send Bitcoin</strong> from your external wallet to the address provided</li>
+          <li><strong>Confirmation</strong> - Your deposit will be credited once the transaction is confirmed on the blockchain (typically 10-30 minutes)</li>
+          <li><strong>View in Dashboard</strong> - Check your account balance in the CryptoVest dashboard</li>
+        </ol>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 215, 0, 0.05); border-radius: 5px;">
+        <h3 style="color: #FFD700; margin: 0 0 10px 0;">⚠️ Important Notes</h3>
+        <ul style="color: #aaa; margin: 0; padding-left: 20px;">
+          <li>Minimum deposit: 0.001 BTC</li>
+          <li>Network fees apply (paid by you to the Bitcoin network)</li>
+          <li>All transactions are irreversible</li>
+          <li>Your funds are secure and FDIC-insured equivalent protection</li>
+          <li>For support, contact: support@cryptovest.com</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer style="background: #000; border-top: 2px solid #FFD700; padding: 30px; text-align: center; color: #999; margin-top: 50px;">
+    <p>© 2026 CryptoVest. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Bitcoin wallet address
+    const BITCOIN_WALLET = 'bc1qp5ep8pkrrymmgc6nsxj0wte2cjgsj83usx03qf';
+    const BTC_TO_USD = 42500; // Current approximate BTC price
+
+    // Initialize QR Code
+    document.addEventListener('DOMContentLoaded', function() {
+      generateQRCode();
+      setupDepositForm();
+    });
+
+    function generateQRCode() {
+      const qrContainer = document.getElementById('qrCode');
+      qrContainer.innerHTML = ''; // Clear previous QR code if any
+      new QRCode(qrContainer, {
+        text: BITCOIN_WALLET,
+        width: 250,
+        height: 250,
+        colorDark: '#000',
+        colorLight: '#fff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function copyToClipboard() {
+      const walletText = BITCOIN_WALLET;
+      navigator.clipboard.writeText(walletText).then(() => {
+        const btn = event.target;
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 Copy Address';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        alert('Failed to copy: ' + err);
+      });
+    }
+
+    function setupDepositForm() {
+      const amountInput = document.getElementById('depositAmount');
+      const usdDisplay = document.getElementById('depositUSD');
+
+      amountInput.addEventListener('input', function() {
+        const btcAmount = parseFloat(this.value) || 0;
+        const usdAmount = (btcAmount * BTC_TO_USD).toFixed(2);
+        usdDisplay.value = '$' + usdAmount;
+      });
+
+      // Pre-fill email if user is logged in
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      if (currentUser.email) {
+        document.getElementById('depositEmail').value = currentUser.email;
+      }
+    }
+
+    function submitDeposit(event) {
+      event.preventDefault();
+
+      const btcAmount = document.getElementById('depositAmount').value;
+      const email = document.getElementById('depositEmail').value;
+      const statusDiv = document.getElementById('depositStatus');
+
+      if (!btcAmount || parseFloat(btcAmount) <= 0) {
+        showDepositStatus('Please enter a valid BTC amount', 'error');
+        return;
+      }
+
+      if (parseFloat(btcAmount) < 0.001) {
+        showDepositStatus('Minimum deposit is 0.001 BTC', 'error');
+        return;
+      }
+
+      if (!email) {
+        showDepositStatus('Please enter your email address', 'error');
+        return;
+      }
+
+      // Save deposit to localStorage
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const deposits = JSON.parse(localStorage.getItem('deposits')) || [];
+      
+      const depositRecord = {
+        id: Date.now(),
+        walletAddress: BITCOIN_WALLET,
+        amount: btcAmount,
+        usdValue: (parseFloat(btcAmount) * BTC_TO_USD).toFixed(2),
+        email: email,
+        status: 'pending',
+        timestamp: new Date().toISOString(),
+        confirmations: 0
+      };
+
+      deposits.push(depositRecord);
+      localStorage.setItem('deposits', JSON.stringify(deposits));
+
+      // Notify user that request is pending admin confirmation (do not add to history until admin confirms)
+      if (typeof emailService !== 'undefined' && email) {
+        const depositParams = {
+          to_email: email,
+          btc_amount: btcAmount,
+          usd_value: depositRecord.usdValue,
+          wallet_address: BITCOIN_WALLET,
+          deposit_date: new Date().toLocaleString(),
+          note: 'Your deposit request has been received and is pending admin confirmation.'
+        };
+        emailService.sendRealEmail(email, 'Bitcoin Deposit Submitted (Pending)', 'template_deposit', depositParams).catch(() => {});
+      }
+
+      showDepositStatus(
+        `✓ Deposit request submitted and is now pending admin confirmation. You will be notified once an admin confirms it. Redirecting...`,
+        'success'
+      );
+
+      // Reset form
+      document.getElementById('depositForm').reset();
+      document.getElementById('depositUSD').value = '$0.00';
+
+      // Redirect to awaiting-confirmation page
+      setTimeout(() => {
+        window.location.href = 'awaiting-confirmation.html';
+      }, 2000);
+    }
+
+    function showDepositStatus(message, type) {
+      const statusDiv = document.getElementById('depositStatus');
+      statusDiv.className = 'deposit-status ' + type;
+      statusDiv.innerHTML = '<strong>' + (type === 'success' ? '✓ Success' : '✗ Error') + ':</strong> ' + message.replace(/✓/g, '<br>✓').replace(/Redirect/g, '<br>Redirect');
+      statusDiv.style.display = 'block';
+      window.scrollTo(0, statusDiv.offsetTop - 100);
+    }
+  </script>
+</body>
+</html>

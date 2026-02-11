@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found - CryptoVest</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .error-title {
+            color: #FFD700;
+            font-size: 36px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: #ccc;
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-btn {
+            padding: 12px 30px;
+            border: 2px solid #FFD700;
+            background: transparent;
+            color: #FFD700;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .error-btn:hover {
+            background: #FFD700;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .error-btn.primary {
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            color: #000;
+            border: none;
+        }
+
+        .error-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .error-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .breadcrumb {
+            color: #999;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body style="background: #0a0a0a;">
+    <div class="watermark"><img src="../assets/images/logo.png" alt="" /></div>
+    <div class="error-container">
+        <div class="error-icon">🔍</div>
+        <p class="error-code">404</p>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-message">
+            The page you're looking for doesn't exist or has been moved. Let's get you back on track!
+        </p>
+
+        <div class="error-actions">
+            <a href="index.html" class="error-btn primary">Return to Home</a>
+            <a href="account.html" class="error-btn">Go to Dashboard</a>
+            <a href="customer-service.html" class="error-btn">Contact Support</a>
+        </div>
+
+        <div class="breadcrumb">
+            <p>Home > <a href="index.html">CryptoVest</a> > 404</p>
+        </div>
+    </div>
+
+    <footer style="position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid #FFD700; padding: 15px; text-align: center; color: #999;">
+        <p style="margin: 0; font-size: 12px;">© 2026 CryptoVest. All rights reserved.</p>
+    </footer>
+</body>
+</html>

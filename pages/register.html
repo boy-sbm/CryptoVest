@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - CryptoVest</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- EmailJS Library for Real Email Sending -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+  <style>
+    .register-container {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #000;
+    }
+
+    .register-left {
+      background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #FFD700;
+    }
+
+    .register-left h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .benefit-icon {
+      font-size: 2em;
+      min-width: 40px;
+    }
+
+    .benefit-text h3 {
+      margin: 0 0 5px 0;
+      color: #FFD700;
+    }
+
+    .benefit-text p {
+      margin: 0;
+      color: #AAA;
+      font-size: 0.95em;
+      line-height: 1.4;
+    }
+
+    .register-right {
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .register-form-wrapper {
+      max-width: 450px;
+    }
+
+    .form-header {
+      margin-bottom: 30px;
+    }
+
+    .form-header h1 {
+      margin: 0 0 10px 0;
+      color: #FFD700;
+      font-size: 2em;
+    }
+
+    .form-header p {
+      margin: 0;
+      color: #AAA;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #FFD700;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-row .form-group {
+      margin-bottom: 0;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #FFD700;
+      border-radius: 5px;
+      background-color: #1a1a1a;
+      color: #FFD700;
+      font-size: 1em;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-sizing: border-box;
+    }
+
+    .form-group input::placeholder {
+      color: #666;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #e6c200;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+
+    .password-strength {
+      margin-top: 8px;
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .strength-bar {
+      height: 100%;
+      width: 0;
+      border-radius: 3px;
+      transition: width 0.3s, background-color 0.3s;
+    }
+
+    .strength-bar.weak {
+      width: 33%;
+      background-color: #FF6B6B;
+    }
+
+    .strength-bar.medium {
+      width: 66%;
+      background-color: #FFD700;
+    }
+
+    .strength-bar.strong {
+      width: 100%;
+      background-color: #90EE90;
+    }
+
+    .strength-text {
+      font-size: 0.8em;
+      margin-top: 4px;
+      color: #AAA;
+    }
+
+    .password-requirements {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 12px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .requirement {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85em;
+      color: #AAA;
+      margin-bottom: 6px;
+    }
+
+    .requirement:last-child {
+      margin-bottom: 0;
+    }
+
+    .requirement.met {
+      color: #90EE90;
+    }
+
+    .requirement-icon {
+      min-width: 16px;
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .form-checkbox input {
+      width: auto;
+      padding: 0;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+    .form-checkbox label {
+      margin: 0;
+      font-weight: normal;
+      color: #AAA;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .form-checkbox label a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    .form-checkbox label a:hover {
+      text-decoration: underline;
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 15px;
+      background: #FFD700;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-bottom: 15px;
+    }
+
+    .register-btn:hover {
+      background-color: #e6c200;
+    }
+
+    .register-btn:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .login-link {
+      text-align: center;
+      color: #AAA;
+    }
+
+    .login-link a {
+      color: #FFD700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      padding: 12px 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .message.success {
+      background-color: #1a3a1a;
+      color: #90EE90;
+      border: 1px solid #90EE90;
+    }
+
+    .message.error {
+      background-color: #3a1a1a;
+      color: #FF6B6B;
+      border: 1px solid #FF6B6B;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 25px 0;
+      color: #666;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #333;
+    }
+
+    @media (max-width: 768px) {
+      .register-container {
+        grid-template-columns: 1fr;
+      }
+
+      .register-left {
+        padding: 40px 20px;
+        order: 2;
+      }
+
+      .register-right {
+        padding: 40px 20px;
+        order: 1;
+      }
+
+      .register-form-wrapper {
+        max-width: 100%;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark"><img src="../assets/images/logo.png" alt="" /></div>
+  <header>
+    <div class="logo"><img src="../assets/images/logo.png" alt="CryptoVest Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;">CryptoVest</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Sign In</a>
+      <a href="register.html">Register</a>
+      <a href="customer-service.html" class="support-link">💬 Support</a>
+    </nav>
+  </header>
+
+  <div class="register-container">
+    <!-- Left Panel -->
+    <div class="register-left">
+      <h2>Why Join CryptoVest?</h2>
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <div class="benefit-icon">🔒</div>
+          <div class="benefit-text">
+            <h3>Bank-Level Security</h3>
+            <p>SSL encryption and two-factor authentication protect your assets 24/7</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">⚡</div>
+          <div class="benefit-text">
+            <h3>Lightning Fast</h3>
+            <p>Instant deposits and withdrawals in minutes, not hours</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">📈</div>
+          <div class="benefit-text">
+            <h3>Transparent Returns</h3>
+            <p>Watch your investments grow with real-time portfolio tracking</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🎯</div>
+          <div class="benefit-text">
+            <h3>Expert Support</h3>
+            <p>24/7 customer service team ready to help you succeed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="register-right">
+      <div class="register-form-wrapper">
+        <div class="form-header">
+          <h1>Create Account</h1>
+          <p>Join thousands of successful crypto investors</p>
+        </div>
+
+        <div id="registerMsg" class="message"></div>
+
+        <form id="registerForm">
+          <!-- Name Fields -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Choose a unique username" required>
+            <div id="usernameStatus" style="display:none;margin-top:6px;font-size:0.85em"></div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+          </div>
+
+          <!-- Date of Birth & Country -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <select id="country" name="country" required>
+                <option value="">Select Country</option>
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ca">Canada</option>
+                <option value="au">Australia</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+              <div class="password-strength">
+                <div class="strength-bar"></div>
+              </div>
+              <div class="strength-text" id="strengthText"></div>
+              <div class="password-requirements" id="passwordRequirements">
+                <div class="requirement" id="req-length">
+                  <span class="requirement-icon">○</span>
+                  <span>At least 8 characters</span>
+                </div>
+                <div class="requirement" id="req-uppercase">
+                  <span class="requirement-icon">○</span>
+                  <span>One uppercase letter (A-Z)</span>
+                </div>
+                <div class="requirement" id="req-lowercase">
+                  <span class="requirement-icon">○</span>
+                  <span>One lowercase letter (a-z)</span>
+                </div>
+                <div class="requirement" id="req-number">
+                  <span class="requirement-icon">○</span>
+                  <span>One number (0-9)</span>
+                </div>
+                <div class="requirement" id="req-special">
+                  <span class="requirement-icon">○</span>
+                  <span>One special character (!@#$%^&*)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+          </div>
+
+          <!-- Terms & Conditions -->
+          <div class="form-checkbox">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">
+              I agree to the <a href="#" onclick="alert('Terms & Conditions')">Terms of Service</a> and 
+              <a href="#" onclick="alert('Privacy Policy')">Privacy Policy</a>
+            </label>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="form-checkbox">
+            <input type="checkbox" id="newsletter" name="newsletter">
+            <label for="newsletter">
+              Keep me updated with investment tips and market news
+            </label>
+          </div>
+
+          <button type="submit" class="register-btn">Create Account</button>
+
+          <div class="login-link">
+            Already have an account? <a href="login.html">Sign In</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer style="background: #000; border-top: 2px solid #FFD700; padding: 30px; text-align: center; color: #999; margin-top: 50px;">
+    <p style="margin-bottom: 10px;">© 2026 CryptoVest. All rights reserved.</p>
+    <p style="margin: 0;">
+      <a href="privacy-policy.html" style="color: #FFD700; text-decoration: none; margin: 0 10px;">Privacy</a> |
+      <a href="terms-of-service.html" style="color: #FFD700; text-decoration: none; margin: 0 10px;">Terms</a> |
+      <a href="customer-service.html" style="color: #FFD700; text-decoration: none; margin: 0 10px;">Support</a> |
+      <a href="index.html" style="color: #FFD700; text-decoration: none; margin: 0 10px;">Home</a>
+    </p>
+  </footer>
+
+  <script src="../assets/js/script.js"></script>
+  <script>
+    // Username duplicate checking
+    const usernameInput = document.getElementById('username');
+    const usernameStatus = document.getElementById('usernameStatus');
+    let existingUsernames = [];
+
+    async function loadExistingUsernames() {
+      try {
+        const res = await fetch('../data/users.json');
+        const users = await res.json();
+        existingUsernames = users.map(u => (u.username || '').toLowerCase());
+      } catch (e) {
+        console.warn('Could not load existing usernames:', e);
+      }
+    }
+
+    loadExistingUsernames();
+
+    usernameInput.addEventListener('input', () => {
+      const username = usernameInput.value.trim();
+      if (!username) {
+        usernameStatus.style.display = 'none';
+        return;
+      }
+
+      const isDuplicate = existingUsernames.includes(username.toLowerCase());
+      usernameStatus.style.display = 'block';
+      
+      if (isDuplicate) {
+        usernameStatus.textContent = '✗ Username already taken';
+        usernameStatus.style.color = '#FF6B6B';
+        usernameInput.style.borderColor = '#FF6B6B';
+      } else if (username.length < 3) {
+        usernameStatus.textContent = '✗ Username must be at least 3 characters';
+        usernameStatus.style.color = '#FFD700';
+        usernameInput.style.borderColor = '#FFD700';
+      } else if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+        usernameStatus.textContent = '✗ Username can only contain letters, numbers, _ and -';
+        usernameStatus.style.color = '#FFD700';
+        usernameInput.style.borderColor = '#FFD700';
+      } else {
+        usernameStatus.textContent = '✓ Username available';
+        usernameStatus.style.color = '#90EE90';
+        usernameInput.style.borderColor = '#90EE90';
+      }
+    });
+
+    const registerForm = document.getElementById('registerForm');
+    const originalSubmit = registerForm.onsubmit;
+    registerForm.onsubmit = function(e) {
+      const username = usernameInput.value.trim();
+      if (existingUsernames.includes(username.toLowerCase())) {
+        alert('Username already taken. Please choose another.');
+        e.preventDefault();
+        return false;
+      }
+      if (username.length < 3 || !/^[a-zA-Z0-9_-]+$/.test(username)) {
+        alert('Invalid username. Must be 3+ characters with only letters, numbers, _, or -');
+        e.preventDefault();
+        return false;
+      }
+    };
+  </script>

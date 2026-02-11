@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Awaiting Confirmation — CryptoVest</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .pending-container{max-width:800px;margin:80px auto;padding:30px;background:#0b0b0b;border:1px solid rgba(255,215,0,0.06);border-radius:8px}
+    .pending-header h1{color:#FFD700}
+    .pending-list{margin-top:18px}
+    .pending-item{padding:12px;border-radius:6px;background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.04);margin-bottom:8px}
+    .muted{color:#aaa}
+  </style>
+</head>
+<body>
+  <div class="pending-container">
+    <div class="pending-header">
+      <h1>Awaiting Admin Confirmation</h1>
+      <p class="muted">Your deposit/withdrawal request has been received and is awaiting admin approval. You will be notified once an admin confirms the transaction.</p>
+    </div>
+
+    <div id="pendingList" class="pending-list">
+      <p class="muted">Loading pending transactions...</p>
+    </div>
+
+    <p style="margin-top:18px;color:#ccc">Go back to <a href="account.html" style="color:#FFD700">Dashboard</a>.</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const pendingList = document.getElementById('pendingList');
+      const deposits = (JSON.parse(localStorage.getItem('deposits')) || []).filter(d => d.status === 'pending');
+      const withdrawals = (JSON.parse(localStorage.getItem('withdrawals')) || []).filter(w => w.status === 'pending');
+
+      const items = [];
+      deposits.forEach(d => { if (!d.email || d.email === currentUser.email) items.push({type:'deposit', rec:d}); });
+      withdrawals.forEach(w => { if (!w.email || w.email === currentUser.email) items.push({type:'withdrawal', rec:w}); });
+
+      if (items.length === 0) {
+        pendingList.innerHTML = '<p class="muted">No pending transactions found for your account.</p>';
+        return;
+      }
+
+      pendingList.innerHTML = items.map(i => `
+        <div class="pending-item">
+          <strong>${i.type === 'deposit' ? 'Deposit' : 'Withdrawal'}</strong> — ID: ${i.rec.id}<br>
+          Amount: ${i.rec.amount} ${i.type === 'deposit' ? 'BTC' : 'BTC'} — Status: ${i.rec.status}<br>
+          Submitted: ${new Date(i.rec.timestamp).toLocaleString()}
+        </div>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

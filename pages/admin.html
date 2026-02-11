@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — CryptoVest</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .admin-container{max-width:1100px;margin:36px auto;padding:20px}
+    .hidden{display:none}
+    table{width:100%;border-collapse:collapse;margin-bottom:16px}
+    th,td{border:1px solid #ddd;padding:8px;text-align:left}
+    .top-bar{display:flex;justify-content:space-between;align-items:center}
+  </style>
+</head>
+<body>
+  <div class="admin-container dashboard">
+    <div class="welcome-header">
+      <div class="welcome-text">
+        <h1>Admin Dashboard</h1>
+        <p class="muted">Manage users, view support complaints, and control the site</p>
+      </div>
+      <div style="text-align:right">
+        <div id="admin-status">Not signed in</div>
+        <div style="margin-top:8px">
+          <button id="signout-btn" class="btn-small hidden">Sign out</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="login-box" style="max-width:420px;margin:0 auto 20px;padding:20px;background:linear-gradient(135deg,#111,#0b0b0b);border-radius:8px;border:1px solid rgba(255,215,0,0.08)">
+      <p style="color:#ccc">This admin page is client-side protected only. Change the password in <strong>assets/js/admin.js</strong> before publishing.</p>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input id="admin-pass" type="password" placeholder="Admin password" style="flex:1;padding:10px;border-radius:6px;border:1px solid #333;background:#0a0a0a;color:#fff">
+        <button id="login-btn" class="btn-small">Sign in</button>
+      </div>
+    </div>
+
+    <div id="dashboard" class="hidden">
+      <div class="quick-actions" style="margin-bottom:18px">
+        <button id="download-users" class="action-btn deposit">Download Users</button>
+        <button id="copy-users" class="action-btn buy">Copy Users</button>
+        <button id="download-complaints" class="action-btn withdraw">Download Complaints</button>
+        <button id="copy-complaints" class="action-btn buy">Copy Complaints</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start">
+        <div>
+          <div style="display:flex;gap:12px;margin-bottom:16px;align-items:center">
+            <h2 style="color:#FFD700;margin:0;flex:1">Users</h2>
+            <input id="user-search" type="text" placeholder="Search by username or email" style="flex:1;padding:8px;border-radius:6px;border:1px solid #333;background:#0a0a0a;color:#fff">
+          </div>
+          <div id="users-table"></div>
+
+          <h2 style="color:#FFD700;margin:18px 0 12px">Pending Transactions</h2>
+          <div id="pending-transactions"></div>
+
+          <h2 style="color:#FFD700;margin:18px 0 12px">Support — Complaints Inbox</h2>
+          <div id="complaints-table"></div>
+        </div>
+
+        <aside style="background:linear-gradient(135deg,#0f0f0f,#0b0b0b);padding:16px;border-radius:8px;border:1px solid rgba(255,215,0,0.06)">
+          <h3 style="color:#FFD700">Complaint Details</h3>
+          <div id="complaint-detail">
+            <p class="muted">Select a complaint from the inbox to view details.</p>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button id="mark-resolved" class="btn-small">Mark Resolved</button>
+            <button id="reload-data" class="btn-small">Reload Data</button>
+          </div>
+
+          <div style="margin-top:18px;border-top:1px solid rgba(255,215,0,0.1);padding-top:12px">
+            <h3 style="color:#FFD700">User Lookup</h3>
+            <input id="user-lookup-input" type="text" placeholder="Search by username or email" style="width:100%;padding:8px;border-radius:6px;border:1px solid #333;background:#0a0a0a;color:#fff;margin-bottom:8px">
+            <button id="user-lookup-btn" class="btn-small" style="width:100%">Search User</button>
+            <div id="user-lookup-result" style="margin-top:10px"></div>
+          </div>
+        </aside>
+      </div>
+
+      <div style="margin-top:20px">
+        <h3 style="color:#FFD700">Site Controls</h3>
+        <p style="color:#ccc">To persist edits, make changes in the repository and push to GitHub. The dashboard only edits in-memory data and provides download/copy options.</p>
+        <ul>
+          <li><a href="/index.html">Open site root</a></li>
+          <li><a href="/pages/register.html">Open register page</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

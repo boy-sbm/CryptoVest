@@ -1,0 +1,4 @@
+[
+  {"id":1,"username":"alice_ex","name":"Alice Example","email":"alice@example.com","status":"active","balance":0,"createdAt":"2026-02-01T10:00:00Z"},
+  {"id":2,"username":"bob_ex","name":"Bob Example","email":"bob@example.com","status":"suspended","balance":0,"createdAt":"2026-02-02T10:00:00Z"}
+]
